@@ -3,11 +3,11 @@ package com.mindex.challenge.data;
 public class ReportingStructure {
 
     private Employee employee;
-    private long numberOfReports;
+    private String numberOfReports;
 
     public ReportingStructure(){}
 
-    public ReportingStructure(Employee employee, long numberOfReports){
+    public ReportingStructure(Employee employee, String numberOfReports){
         this.employee = employee;
         this.numberOfReports = numberOfReports;
     }
@@ -21,11 +21,11 @@ public class ReportingStructure {
         this.employee = employee;
     }
 
-    public long getNumberOfReports() {
+    public String getNumberOfReports() {
         return numberOfReports;
     }
 
-    public void setNumberOfReports(long numberOfReports) {
+    public void setNumberOfReports(String numberOfReports) {
         this.numberOfReports = numberOfReports;
     }
 }
