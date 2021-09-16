@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Service
@@ -42,13 +40,13 @@ public class ReportingStructureImpl implements ReportingStructureService {
 
             return reportingStructure;
         }
-        Integer totalReportingEmployees = recursiveMethod(employee, total);
+        Integer totalReportingEmployees = getReportTotal(employee, total);
         reportingStructure.setNumberOfReports(totalReportingEmployees.toString());
         return reportingStructure;
     }
 
 
-    public Integer recursiveMethod(Employee employee, Integer total) {
+    public Integer getReportTotal(Employee employee, Integer total) {
         LOG.debug("Entering the reporting Hierarchy");
         if (employee.getDirectReports() != null) {
             LOG.debug("Entering the first if statement");
@@ -57,7 +55,7 @@ public class ReportingStructureImpl implements ReportingStructureService {
                     LOG.debug("Entering the for loop");
                     if (reportingEmployee.getDirectReports() != null) {
                         LOG.debug("Entering the second if statement");
-                            recursiveMethod(reportingEmployee, total);
+                            getReportTotal(reportingEmployee, total);
                     } else {
                         LOG.debug("report must be null");
 
