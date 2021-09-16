@@ -9,5 +9,5 @@ public interface ReportingStructureService {
 
     ReportingStructure read(String id);
 
-    Integer recursiveMethod(Employee employee);
+    Integer recursiveMethod(Employee employee, Integer Total);
 }

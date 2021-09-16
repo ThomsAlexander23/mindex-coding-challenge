@@ -29,30 +29,44 @@ public class ReportingStructureImpl implements ReportingStructureService {
     public ReportingStructure read(String id) {
         LOG.debug("Creating reporting structure for employee with id [{}]");
 
-        List<Employee> reportingEmployees = new ArrayList<Employee>();
-
         Employee employee = employeeRepository.findByEmployeeId(id);
+
+        Integer total = 0;
+        ReportingStructure reportingStructure = new ReportingStructure(employee);
+
         if (employee == null) {
             throw new RuntimeException("Invalid employeeId: " + id);
         }
-        if (employee.getDirectReports().isEmpty()) {
-            return null;
+        if (employee.getDirectReports().isEmpty() || employee.getDirectReports() == null) {
+            reportingStructure.setNumberOfReports("Has no documented reporting hierarchy");
+
+            return reportingStructure;
         }
-        Integer totalReportingEmployees = recursiveMethod(employee);
-        ReportingStructure reportingStructure = new ReportingStructure(employee, totalReportingEmployees.toString());
+        Integer totalReportingEmployees = recursiveMethod(employee, total);
+        reportingStructure.setNumberOfReports(totalReportingEmployees.toString());
         return reportingStructure;
     }
 
 
-    public Integer recursiveMethod(Employee employee) {
-        Integer total = 0;
-        while (!employee.getDirectReports().isEmpty()) {
-            total += employee.getDirectReports().size();
-            for (Employee reportingEmployee : employee.getDirectReports()) {
-                total += reportingEmployee.getDirectReports().size();
-                recursiveMethod(reportingEmployee);
+    public Integer recursiveMethod(Employee employee, Integer total) {
+        LOG.debug("Entering the reporting Hierarchy");
+        if (employee.getDirectReports() != null) {
+            LOG.debug("Entering the first if statement");
+                total += employee.getDirectReports().size();
+                for (Employee reportingEmployee : employee.getDirectReports()) {
+                    LOG.debug("Entering the for loop");
+                    if (reportingEmployee.getDirectReports() != null) {
+                        LOG.debug("Entering the second if statement");
+                            recursiveMethod(reportingEmployee, total);
+                    } else {
+                        LOG.debug("report must be null");
+
+                        continue;
+                    }
+//                }
             }
         }
+        LOG.debug("Hierarchy end found and has:" + total + " reporting employees");
         return total;
     }
 }
