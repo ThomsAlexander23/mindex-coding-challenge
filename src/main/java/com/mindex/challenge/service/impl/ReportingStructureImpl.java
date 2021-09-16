@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 public class ReportingStructureImpl implements ReportingStructureService {
@@ -21,15 +24,35 @@ public class ReportingStructureImpl implements ReportingStructureService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+
     @Override
-    public ReportingStructure read(String id){
+    public ReportingStructure read(String id) {
         LOG.debug("Creating reporting structure for employee with id [{}]");
 
-        Employee[] reportingEmployees = new Employee[];
+        List<Employee> reportingEmployees = new ArrayList<Employee>();
 
         Employee employee = employeeRepository.findByEmployeeId(id);
         if (employee == null) {
             throw new RuntimeException("Invalid employeeId: " + id);
         }
+        if (employee.getDirectReports().isEmpty()) {
+            return null;
+        }
+        Integer totalReportingEmployees = recursiveMethod(employee);
+        ReportingStructure reportingStructure = new ReportingStructure(employee, totalReportingEmployees.toString());
+        return reportingStructure;
+    }
+
+
+    public Integer recursiveMethod(Employee employee) {
+        Integer total = 0;
+        while (!employee.getDirectReports().isEmpty()) {
+            total += employee.getDirectReports().size();
+            for (Employee reportingEmployee : employee.getDirectReports()) {
+                total += reportingEmployee.getDirectReports().size();
+                recursiveMethod(reportingEmployee);
+            }
+        }
+        return total;
     }
 }
