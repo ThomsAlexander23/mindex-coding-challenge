@@ -2,6 +2,7 @@ package com.mindex.challenge.data;
 
 import java.util.Date;
 
+
 public class Compensation {
 
     private Employee employee;
@@ -10,11 +11,23 @@ public class Compensation {
 
     public Compensation(){}
 
-    public Compensation(Employee employee, String salary, Date effectiveDate){
-        this.employee = employee;
-        this.salary = salary;
-        this.effectiveDate = new Date(effectiveDate.getTime());
-    }
+//    public Compensation(int id, Employee employee, Date effectiveDate, String salary) {
+//        this.id = id;
+//        this.employee = employee;
+//        this.effectiveDate = effectiveDate;
+//        this.salary = salary;
+//    }
+//
+//    public Compensation(Employee employee, String salary) {
+//        this.employee = employee;
+//        this.salary = salary;
+//        this.effectiveDate = new Date(effectiveDate.getTime());
+//    }
+//
+//    public Compensation(String salary) {
+//        this.salary = salary;
+//        this.effectiveDate = new Date(effectiveDate.getTime());
+//    }
 
     public Employee getEmployee() {
         return employee;
@@ -24,12 +37,11 @@ public class Compensation {
         this.employee = employee;
     }
 
-    public Date getEffectiveDate() {
-        return new Date(effectiveDate.getTime());
+    public Date getEffectiveDate() { return effectiveDate;
     }
 
     public void setEffectiveDate(Date effectiveDate) {
-        this.effectiveDate = new Date(effectiveDate.getTime());
+        this.effectiveDate = effectiveDate;
     }
 
     public String getSalary() {
