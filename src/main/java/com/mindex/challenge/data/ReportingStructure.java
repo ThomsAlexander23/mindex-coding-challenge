@@ -5,17 +5,10 @@ public class ReportingStructure {
     private Employee employee;
     private String numberOfReports;
 
-    public ReportingStructure(){}
-
-    public ReportingStructure(Employee employee, String numberOfReports){
-        this.employee = employee;
-        this.numberOfReports = numberOfReports;
-    }
-
-    public ReportingStructure(Employee employee){
-        this.employee = employee;
-    }
-
+    /*
+    employee parameter needed to assign reporting structure class at read method in implementation
+     */
+    public ReportingStructure(Employee employee){}
 
     public Employee getEmployee() {
         return employee;
