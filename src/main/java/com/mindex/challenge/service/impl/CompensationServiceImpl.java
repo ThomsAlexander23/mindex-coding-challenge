@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
 public class CompensationServiceImpl implements CompensationService {
 
@@ -37,12 +35,12 @@ public class CompensationServiceImpl implements CompensationService {
         LOG.debug("creating compensation with id [{}]", id);
 
         Employee employee = employeeRepository.findByEmployeeId(id);
+
         Compensation compensation = compensationRepository.getByEmployee(employee);
 
         if (employee == null) {
             throw new RuntimeException("Invalid employeeId: " + id);
         }
-
         return compensation;
     }
 }
